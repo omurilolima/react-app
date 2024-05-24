@@ -1,19 +1,24 @@
 import { useState } from "react";
-import produce from "immer";
-import NavBar from "./components/NavBar";
-import Cart from "./components/Cart";
 
 function App() {
-  const [cartItems, setCartitems] = useState(["Product1", "Product2"]);
+  const [cart, setCart] = useState({
+    discount: 0.1,
+    items: [
+      { id: 1, title: "Product 1", quantity: 1 },
+      { id: 2, title: "Product 2", quantity: 1 },
+    ],
+  });
 
-  // The logic operation (eg. cartItemsCount and onClear) should be executed in the App that loads the component
-  // Not in the component itself
-  return (
-    <div>
-      <NavBar cartItemsCount={cartItems.length} />
-      <Cart cartItems={cartItems} onClear={() => setCartitems([])} />
-    </div>
-  );
+  const handleClick = () => {
+    setCart({
+      ...cart,
+      items: cart.items.map((item) =>
+        item.id === 1 ? { ...item, quantity: item.quantity + 1 } : item
+      ),
+    });
+  };
+
+  return <div></div>;
 }
 
 export default App;
