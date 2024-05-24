@@ -2,20 +2,19 @@ import { useState } from "react";
 import Like from "./components/Like";
 
 function App() {
-  const [customer, setCustomer] = useState({
-    name: "John",
-    address: {
-      city: "San Francisco",
-      zipCode: 94111,
-    },
-  });
+  const [tags, setTags] = useState(["happy", "cheerful"]);
 
   const handleClick = () => {
-    setCustomer({
-      ...customer,
-      address: { ...customer.address, zipCode: 94112 },
-    });
-    console.log(customer.address.zipCode);
+    // Add an item
+    // Use the Spread operator "..." to copy all the itens of the orinal array into the new array
+    // Then add a new item "exciting"
+    setTags({ ...tags, 'exciting' });
+
+    // Remove
+    setTags(tags.filter(tag => tag !== 'happy'));
+
+    // Update
+    setTags(tags.map(tag => tag === 'happy' ? 'happiness' : tag));
   };
 
   return (
