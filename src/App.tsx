@@ -1,18 +1,26 @@
 import { useState } from "react";
-import Button from "./components/Button";
-import Alert from "./components/Alert";
+import Like from "./components/Like";
 
 function App() {
-  const [alertVisible, setAlertVisibility] = useState(false);
+  const [customer, setCustomer] = useState({
+    name: "John",
+    address: {
+      city: "San Francisco",
+      zipCode: 94111,
+    },
+  });
+
+  const handleClick = () => {
+    setCustomer({
+      ...customer,
+      address: { ...customer.address, zipCode: 94112 },
+    });
+    console.log(customer.address.zipCode);
+  };
 
   return (
     <div>
-      {alertVisible && (
-        <Alert onClose={() => setAlertVisibility(false)}>My alert</Alert>
-      )}
-      <Button color="primary" onClick={() => setAlertVisibility(true)}>
-        My Button
-      </Button>
+      <button onClick={handleClick}>Click Me</button>
     </div>
   );
 }
