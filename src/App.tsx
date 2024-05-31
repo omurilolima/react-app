@@ -35,13 +35,33 @@ function App() {
     return () => controller.abort();
   }, []);
 
+  // DELETE function
+  const deleteUser = (user: User) => {
+    const originalUsers = [...users];
+    setUsers(users.filter((u) => u.id !== user.id));
+
+    axios
+      .delete("https://jsonplaceholder.typicode.com/users/" + user.id)
+      .catch((err) => {
+        setError(err.message);
+        setUsers(originalUsers);
+      });
+  };
+
   return (
     <>
       {error && <p className="text-danger">{error}</p>}
       {isLoading && <div className="spinner-border"></div>}
-      <ul>
+      <ul className="list-group">
         {users.map((user) => (
-          <li key={user.id}>{user.name}</li>
+          <li
+            key={user.id}
+            className="list-group-item d-flex justify-content-between"
+            onClick={() => deleteUser(user)}
+          >
+            {user.name}
+            <button className="btn btn-outline-danger">Delete</button>{" "}
+          </li>
         ))}
       </ul>
     </>
