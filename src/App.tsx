@@ -35,7 +35,7 @@ function App() {
     return () => controller.abort();
   }, []);
 
-  // DELETE function
+  // DELETE User Function
   const deleteUser = (user: User) => {
     const originalUsers = [...users];
     setUsers(users.filter((u) => u.id !== user.id));
@@ -48,10 +48,28 @@ function App() {
       });
   };
 
+  // ADD User Function
+  const addUser = () => {
+    const originalUsers = [...users];
+    const newUser = { id: 0, name: "Mosh" };
+    setUsers([newUser, ...users]);
+
+    axios
+      .post("https://jsonplaceholder.typicode.com/users", newUser)
+      .then(({ data: savedUser }) => setUsers([savedUser, ...users]))
+      .catch((err) => {
+        setError(err.message);
+        setUsers(originalUsers);
+      });
+  };
+
   return (
     <>
       {error && <p className="text-danger">{error}</p>}
       {isLoading && <div className="spinner-border"></div>}
+      <button className="btn btn-primary mb-3" onClick={addUser}>
+        Add
+      </button>
       <ul className="list-group">
         {users.map((user) => (
           <li
